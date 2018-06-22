@@ -16,41 +16,43 @@ public class Counter1DifferentWords {
     public static void main( String[] args ) throws IOException, URISyntaxException {
         InputStream resourceAsStream = Counter1DifferentWords.class.getResourceAsStream("/ru/sbt/collections/VeryBigText.txt");
         String text = IOUtils.toString( resourceAsStream, "UTF8" );
-        SplittedText splittedText = new SplittedText(text);
+        SplittedTextIntoWords splittedTextIntoWords = new SplittedTextIntoWords(text);
+        SplittedTextIntoLines splittedTextIntoLines = new SplittedTextIntoLines(text);
 
         //task 1
-        System.out.println("всего слов - " + splittedText.getAllWords().length);
-        System.out.println("уникальных слов - " + splittedText.getUniqueWords().length);
+        System.out.println("всего слов - " + splittedTextIntoWords.getAllWords().length);
+        System.out.println("уникальных слов - " + splittedTextIntoWords.getUniqueWords().length);
         //task 1
 
         //task 2
-        for (String s:splittedText.getSortedUniqueWords()) {
+        for (String s:splittedTextIntoWords.getSortedUniqueWords()) {
             System.out.println(s);
         }
         //task 2
 
         //task 3
-        HashMap<String, Integer> wordsWithCount = splittedText.getWordsWithCount();
-        for (String s: splittedText.getUniqueWords()) {
+        HashMap<String, Integer> wordsWithCount = splittedTextIntoWords.getWordsWithCount();
+        for (String s: splittedTextIntoWords.getUniqueWords()) {
             System.out.println(s + " - " + wordsWithCount.get(s));
         }
         //task 3
 
         //task 4
-        for (int i = splittedText.getAllLines().length; i > 0; i--) {
-            System.out.println(splittedText.getAllLines()[i-1]);
+        Iterator iteratorForLines = splittedTextIntoLines.iterator();
+        while (iteratorForLines.hasNext()){
+            System.out.println(iteratorForLines.next());
         }
         //task 4
 
         //task 5
-
+        //в классе SplittedTextIntoWords итератор для обхода в прямом порядке, в классе SplittedTextIntoLines - в обратном
         //task 5
 
         //task 6
         while (true){
             Scanner scanner = new Scanner(System.in);
-            int userChoise = scanner.nextInt();
-            System.out.println(splittedText.getLine(userChoise));
+            int userChoice = scanner.nextInt();
+            System.out.println(splittedTextIntoLines.getLine(userChoice));
         }
         //task 6
 

@@ -5,22 +5,16 @@ import java.util.*;
 /**
  * Created by ag on 22.06.2018.
  */
-public class SplittedText {
+public class SplittedTextIntoWords implements Iterable{
     private String[] allWords;
-    private String[] allLines;
 
-    public SplittedText(String text){
-        allLines = text.split("\n");
+    public SplittedTextIntoWords(String text){
         String textAfterReplace = text.replaceAll("[^a-zA-Zа-яА-Яё]", " ");
         allWords = textAfterReplace.split("\\s+");
     }
 
     public String[] getAllWords(){
         return allWords;
-    }
-
-    public String[] getAllLines(){
-        return allLines;
     }
 
     public String[] getUniqueWords(){
@@ -56,13 +50,21 @@ public class SplittedText {
         return uniqueWordsWithCount;
     }
 
-    public String getLine(int index){
-        if (index > 0 && index <= this.getAllLines().length){
-            return getAllLines()[index - 1];
-        }else {
-            return "in this text only " + this.getAllLines().length + "lines";
-        }
+
+    @Override
+    public Iterator iterator() {
+        return new Iterator() {
+            private int cursor = 0;
+
+            @Override
+            public boolean hasNext() {
+                return cursor != allWords.length;
+            }
+
+            @Override
+            public Object next() {
+                return allWords[cursor++];
+            }
+        };
     }
-
-
 }
